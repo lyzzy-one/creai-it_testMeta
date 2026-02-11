@@ -1,0 +1,39 @@
+// Prisma schema for AI Skill Test
+// Database: PostgreSQL (Neon)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User who takes the test
+model User {
+  id        String       @id @default(cuid())
+  nickname  String
+  createdAt DateTime     @default(now())
+  results   TestResult[]
+}
+
+// Test result for each user
+model TestResult {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  score      Int
+  resultType String
+  answers    Json     // Store individual answers as JSON
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+}
+
+// Phone entries for the event popup (optional)
+model PhoneEntry {
+  id          String   @id @default(cuid())
+  phoneNumber String
+  createdAt   DateTime @default(now())
+}
