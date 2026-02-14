@@ -47,43 +47,43 @@ export default function QuestionPage() {
     <div className="min-h-screen gradient-bg flex flex-col">
       <ProgressBar current={questionId} total={TOTAL_QUESTIONS} />
 
-      <div className="flex-1 flex flex-col justify-center p-4">
-        <div className="bg-white rounded-3xl p-6 card-shadow animate-fadeIn">
-          <div className="text-center mb-4">
-            <span className="text-sm font-medium text-[#1e3a5f]/60">
-              Q{questionId}
-            </span>
-          </div>
+      <div className="flex-1 flex flex-col justify-center px-5 py-6">
+        {/* Question Section */}
+        <div className="text-center mb-8 animate-fadeIn">
+          <span className="inline-block px-4 py-1.5 bg-white/10 rounded-full text-white/80 text-sm font-medium mb-4">
+            Q{questionId}
+          </span>
 
-          <p className="text-gray-500 text-sm text-center mb-2">
+          <p className="text-white/60 text-sm mb-3">
             {question.situation}
           </p>
 
-          <h2 className="text-xl font-bold text-[#1e3a5f] text-center mb-8">
+          <h2 className="text-xl font-bold text-white leading-relaxed">
             {question.question}
           </h2>
+        </div>
 
-          <div className="space-y-3">
-            {question.answers.map((answer, index) => (
-              <button
-                key={answer.id}
-                onClick={() => handleAnswerSelect(answer)}
-                disabled={isAnimating}
-                className={`w-full p-4 rounded-2xl text-left transition-all duration-200 ${
-                  selectedAnswer === answer.id
-                    ? "bg-[#1e3a5f] text-white scale-[0.98]"
-                    : "bg-gray-50 text-gray-900 hover:bg-gray-100 active:scale-[0.98]"
-                } ${isAnimating && selectedAnswer !== answer.id ? "opacity-50" : ""}`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <span className="font-medium">{answer.text}</span>
-              </button>
-            ))}
-          </div>
+        {/* Answer Options - Vertical List */}
+        <div className="flex flex-col gap-3 animate-slideUp">
+          {question.answers.map((answer, index) => (
+            <button
+              key={answer.id}
+              onClick={() => handleAnswerSelect(answer)}
+              disabled={isAnimating}
+              className={`w-full px-5 py-4 rounded-2xl text-left transition-all duration-200 border-2 ${
+                selectedAnswer === answer.id
+                  ? "bg-white text-[#1e3a5f] border-white scale-[0.98]"
+                  : "bg-white/10 text-white border-white/20 hover:bg-white/20 hover:border-white/40 active:scale-[0.98]"
+              } ${isAnimating && selectedAnswer !== answer.id ? "opacity-40" : ""}`}
+              style={{ animationDelay: `${index * 80}ms` }}
+            >
+              <span className="font-medium text-base leading-snug">{answer.text}</span>
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="p-4 text-center">
+      <div className="px-5 pb-6 pt-2 text-center">
         <p className="text-white/40 text-xs">
           답변을 선택하면 자동으로 다음 문항으로 넘어갑니다
         </p>
